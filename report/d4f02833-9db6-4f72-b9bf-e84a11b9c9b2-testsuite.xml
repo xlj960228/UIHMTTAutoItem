@@ -1,0 +1,81 @@
+<ns0:test-suite xmlns:ns0="urn:model.allure.qatools.yandex.ru" start="1578735797627" stop="1578735851392">
+  <name>scripts</name>
+  <labels/>
+  <test-cases>
+    <test-case start="1578735797627" status="failed" stop="1578735851392">
+      <name>test06_app_article.TestAppAricle.test_app_article</name>
+      <failure>
+        <message>Exception: 异常啦! 滑到最后一屏幕也没找到</message>
+        <stack-trace>self = &lt;scripts.test06_app_article.TestAppAricle object at 0x04775C90&gt;
+
+    def test_app_article(self):
+        #调用查找文章方法
+&gt;       self.article.page_app_article(find_text="python", title_text="python")
+
+scripts\test06_app_article.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+page\page_app_article.py:18: in page_app_article
+    self.page_find_article(title_text)
+page\page_app_article.py:12: in page_find_article
+    self.base_app_down_to_up(page.app_article_area, title_text)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;page.page_app_article.PageAppArtile object at 0x047756D0&gt;
+area_loc = ('xpath', "//*//*[@bounds='[0,390][1080,1716]']")
+find_text = 'python'
+
+    def base_app_down_to_up(self, area_loc, find_text):
+        # 获取区域元素
+        el = self.base_find(area_loc)
+        # 获取元素宽高
+        size = el.size
+        width = size.get("width")
+        height = size.get("height")
+    
+        # 计算start_x start_y end_x end_y
+        start_x = width * 0.5
+        start_y = height * 0.8
+        end_x = width * 0.5
+        end_y =  height * 0.2
+    
+        # 组合find_text包含的元素定位信息
+        loc = By.XPATH, "//*[@bounds='[0,390][1080,1716]']//*[contains(@text, '{}')]".format(find_text)
+        # 获取当前页面结构
+        page_source = self.driver.page_source
+        while True:
+    
+            # 首先  查找一次当前页面是否存在  要找的元素
+            try:
+                print("正在查找包含文章标题: {}".format(find_text))
+                el = self.base_find(loc, timeout=5)
+                print("找到 包含{} 文章的标题!  --&gt; 文章标题为:{} ".format(find_text, el.text))
+                el.click()
+                # 跳出循环
+                break
+            except:
+                print("当前页面没有找到指定的文章标题")
+                # 滑动杆屏幕
+                self.driver.swipe(start_x, start_y, end_x, end_y, 2000)
+    
+            if page_source == self.driver.page_source:
+                print("滑不动啦, 找不到! ")
+&gt;               raise Exception("异常啦! 滑到最后一屏幕也没找到")
+E               Exception: 异常啦! 滑到最后一屏幕也没找到
+
+base\app_base.py:89: Exception</stack-trace>
+      </failure>
+      <attachments>
+        <attachment source="45f2fea6-30bf-4736-a9e9-579a8018019e-attachment.txt" title="Captured log setup" type="text/plain"/>
+        <attachment source="c5e1c18a-ab80-4360-8585-3720e396622b-attachment.txt" title="Captured log call" type="text/plain"/>
+      </attachments>
+      <labels>
+        <label name="severity" value="normal"/>
+        <label name="thread" value="29184-MainThread"/>
+        <label name="host" value="LAPTOP-6VNLHDUH"/>
+        <label name="framework" value="pytest"/>
+        <label name="language" value="cpython3"/>
+      </labels>
+      <steps/>
+    </test-case>
+  </test-cases>
+</ns0:test-suite>
