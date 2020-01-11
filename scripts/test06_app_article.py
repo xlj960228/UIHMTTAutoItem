@@ -1,3 +1,5 @@
+from time import sleep
+
 from page.page_in import PageIn
 from tools.get_driver import GetDriver
 
@@ -5,6 +7,7 @@ from tools.get_driver import GetDriver
 class TestAppAricle:
     #初始化
     def setup_class(self):
+        sleep(5)
         #获取driver
         driver = GetDriver.get_app_driver()
         #通过统一入口类 对象
@@ -22,4 +25,4 @@ class TestAppAricle:
     #查找文章测试方法
     def test_app_article(self):
         #调用查找文章方法
-        self.article.page_app_article(find_text="python", title_text="python")
+        self.article.page_app_article(find_text="后端", title_text="java")
